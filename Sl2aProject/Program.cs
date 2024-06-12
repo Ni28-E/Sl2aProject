@@ -7,8 +7,8 @@ namespace Sl2aProject
         static void Main(string[] args)
         {
 
-            Snake snake = new Snake();
-            snake.Play(snake);
+            Snake snake = new ();
+            snake.Play();
         }
     }
 }

@@ -11,8 +11,17 @@
         int parts = 3;
         char key = 'w';
         ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
+        Random rand = new Random();
+        public Snake()
+        {
+            X[0] = 5;
+            Y[0] = 5;
+            Console.CursorVisible = false;//we hide the cursor
+            appleX = rand.Next(2, (BoardWidth - 2));
+            appleY = rand.Next(2, (BoardHeight - 2));
+        }
 
-        public void Play(Snake snake)
+        public void Play()
         {
             Console.Clear();//here we clear all the previous inputs from the console
 
@@ -73,7 +82,7 @@
         public void Logic()
         {
 
-            Random rand = new Random();
+            
 
             if (X[0] == appleX)
             {
@@ -107,10 +116,15 @@
             }
             for (int i = 0; i <= (parts - 1); i++)
             {
-                WriteLocation(X[i], Y[i]);
+                WriteLocation(X[i], Y[i]);//Bugged look for fix
                 WriteLocation(appleX, appleY);
             }
             Thread.Sleep(100);
+        }
+
+        public void GameOver()
+        {
+
         }
     }
 }
