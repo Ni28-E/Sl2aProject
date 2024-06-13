@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using System;
 
 namespace Sl2aProject
 {
@@ -6,10 +7,11 @@ namespace Sl2aProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome the great C# game emporium!!!");
-            Console.WriteLine("If you want to play Snake type snake");
-            Console.WriteLine("If you want to play tic-tac-toe type tic");
-            Console.WriteLine("If you want to play druver type driver");
+            Console.WriteLine("Welcome the great C# game emporium!!!" +
+                "\n\nIf you want to play Snake type snake." +
+                "\nIf you want to play tic-tac-toe type tic." +
+                "\nIf you want to play druver type driver." +
+                "\n\nIf you are done playing type quit.");
             string Game = Console.ReadLine();
             
             switch(Game)
@@ -27,6 +29,10 @@ namespace Sl2aProject
                 case "d": 
                     Driver driver = new();
                     driver.Initialize();
+                    break;
+                case "quit":
+                case "q":
+                    Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Choose a valid option.");

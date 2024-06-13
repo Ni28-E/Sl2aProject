@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
-Console.CursorVisible = false;
-
 namespace Sl2aProject
 {
     public class Driver
@@ -31,42 +29,40 @@ namespace Sl2aProject
         // why the application stopped working. - Brian
         public void Initialize()
         {
-            try
+            LaunchScreen();
+            while (keepPlaying)
             {
-                Initialize();
-                LaunchScreen();
-                while (keepPlaying)
+                InitializeScene();
+                while (gameActive)
                 {
-                    InitializeScene();
-                    while (gameActive)
+                    if (Console.WindowHeight < height || Console.WindowWidth < width)
                     {
-                        if (Console.WindowHeight < height || Console.WindowWidth < width)
-                        {
-                            consoleSizeError = true;
-                            keepPlaying = false;
-                            break;
-                        }
-                        HandleInput();
-                        Update();
-                        Render();
-                        if (gameActive)
-                        {
-                            Thread.Sleep(TimeSpan.FromMilliseconds(33));
-                        }
+                        consoleSizeError = true;
+                        keepPlaying = false;
+                        break;
                     }
-                    Console.Clear();
-                    if (consoleSizeError)
+                    HandleInput();
+                    Update();
+                    Render();
+                    if (gameActive)
                     {
-                        Console.WriteLine("Console/Terminal is too small.");
-                        Console.WriteLine($"Minimum size is {width} x {height} height.");
-                        Console.WriteLine("Increase the size of the console window.");
+                        Thread.Sleep(TimeSpan.FromMilliseconds(33));
                     }
-                    Console.WriteLine("Game driver was closed");
                 }
-            }
-            finally
-            {
-                Console.CursorVisible = true;
+
+                if(keepPlaying)
+                {
+                    GameOverScreen();
+                }
+
+                Console.Clear();
+                if (consoleSizeError)
+                {
+                    Console.WriteLine("Console/Terminal is too small.");
+                    Console.WriteLine($"Minimum size is {width} x {height} height.");
+                    Console.WriteLine("Increase the size of the console window.");
+                }
+                Console.WriteLine("Game driver was closed");
             }
 
             WindowWidth = Console.WindowWidth;
@@ -191,7 +187,7 @@ namespace Sl2aProject
         void GameOverScreen()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine("Game Over");
+            Console.WriteLine($"Game Over");
             Console.WriteLine($"Score: {score}");
             Console.WriteLine($"Play Again (Y/N)?");
         GetInput:
@@ -202,6 +198,7 @@ namespace Sl2aProject
                     keepPlaying = true;
                     break;
                 case ConsoleKey.N or ConsoleKey.Escape:
+                    gameActive = false;
                     keepPlaying = false;
                     break;
                 default:
