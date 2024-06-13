@@ -11,15 +11,26 @@ namespace Sl2aProject
             Console.WriteLine("If you want to play tic-tac-toe type tic");
             Console.WriteLine("If you want to play druver type driver");
             string Game = Console.ReadLine();
-            if (Game == "snake")
+            
+            switch(Game)
             {
-                Snake snake = new();
-                snake.Play();
-            }
-            else if (Game == "driver")
-            {
-                Driver driver = new();
-                driver.Initialize();
+                case "snake":
+                case "s":
+                    Snake snake = new();
+                    snake.Play();
+                    break;
+                case "tic":
+                case "t":
+
+                    break;
+                case "driver":
+                case "d": 
+                    Driver driver = new();
+                    driver.Initialize();
+                    break;
+                default:
+                    Console.WriteLine("Choose a valid option.");
+                    break;
             }
         }
     }
