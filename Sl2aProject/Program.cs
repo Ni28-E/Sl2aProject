@@ -19,9 +19,8 @@ namespace Sl2aProject
             else if (Game == "driver")
             {
                 Driver driver = new();
-                driver.Initiliaze();
+                driver.Initialize();
             }
-
         }
     }
 }

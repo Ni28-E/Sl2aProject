@@ -5,12 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
-
 Console.CursorVisible = false;
+
 namespace Sl2aProject
 {
-    
-
     public class Driver
     {
         int width = 50;
@@ -23,12 +21,54 @@ namespace Sl2aProject
         int driverPosition;
         int driverVelocity;
         bool gameActive;
-        bool keepPlaying = true;
         bool consoleSizeError = false;
+        bool keepPlaying = true;
+
         int previousRoadUpdate = 0;
 
+        // This method initiliazes the game. Before it does that it checks if the screen size of the console
+        // is big enough to display the game. If that is not the case the application will stop and display
+        // why the application stopped working. - Brian
         public void Initialize()
         {
+            try
+            {
+                Initialize();
+                LaunchScreen();
+                while (keepPlaying)
+                {
+                    InitializeScene();
+                    while (gameActive)
+                    {
+                        if (Console.WindowHeight < height || Console.WindowWidth < width)
+                        {
+                            consoleSizeError = true;
+                            keepPlaying = false;
+                            break;
+                        }
+                        HandleInput();
+                        Update();
+                        Render();
+                        if (gameActive)
+                        {
+                            Thread.Sleep(TimeSpan.FromMilliseconds(33));
+                        }
+                    }
+                    Console.Clear();
+                    if (consoleSizeError)
+                    {
+                        Console.WriteLine("Console/Terminal is too small.");
+                        Console.WriteLine($"Minimum size is {width} x {height} height.");
+                        Console.WriteLine("Increase the size of the console window.");
+                    }
+                    Console.WriteLine("Game driver was closed");
+                }
+            }
+            finally
+            {
+                Console.CursorVisible = true;
+            }
+
             WindowWidth = Console.WindowWidth;
             WindowHeight = Console.WindowHeight;
             if (OperatingSystem.IsWindows())
@@ -46,6 +86,7 @@ namespace Sl2aProject
             }
         }
 
+        // If the initilization worked this screen will display to explain the controls of the game. - Brian
         internal void LaunchScreen()
         {
             Console.Clear();
@@ -59,20 +100,21 @@ namespace Sl2aProject
             PressEnterToContinue();
         }
 
+        // This method calculates the way the 'road' is generated. - Brian
         void InitializeScene()
         {
             const int roadWidth = 15;
             gameActive = true;
             driverPosition = width / 2;
             driverVelocity = 0;
-            int leftEdge = (width - roadWidth) / 2;
-            int rightEdge = leftEdge + roadWidth + 1;
+            int leftSide = (width - roadWidth) / 2;
+            int rightSide = leftSide + roadWidth + 1;
             scene = new char[height, width];
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    if (j < leftEdge || j > rightEdge)
+                    if (j < leftSide || j > rightSide)
                     {
                         scene[i, j] = '.';
                     }
@@ -84,6 +126,9 @@ namespace Sl2aProject
             }
         }
 
+        // This method checks which position the 'driver' is in.
+        // Dependant on which button the player last pressed the driver character
+        // changes its look correspondant to the way of movement. - Brian
         void Render()
         {
             StringBuilder stringBuilder = new(width * height);
@@ -113,6 +158,7 @@ namespace Sl2aProject
             Console.Write(stringBuilder);
         }
 
+        // This method reads which button has been pressed and moves the player towards that direction. - Brian
         void HandleInput()
         {
             while (Console.KeyAvailable)
@@ -140,6 +186,8 @@ namespace Sl2aProject
             }
         }
 
+        // This method checks if the user has died. If that is the case, the game gives
+        // the player the option to restart or not.
         void GameOverScreen()
         {
             Console.SetCursorPosition(0, 0);
@@ -161,7 +209,8 @@ namespace Sl2aProject
             }
         }
 
-        void Update()
+        // This method updates the road to be different and not a straight line. - Brian
+        public void Update()
         {
             for (int i = 0; i < height - 1; i++)
             {
@@ -177,14 +226,14 @@ namespace Sl2aProject
             if (roadUpdate is 1 && scene[height - 1, width - 1] is ' ') roadUpdate = -1;
             switch (roadUpdate)
             {
-                case -1: // left
+                case -1: // Left side
                     for (int i = 0; i < width - 1; i++)
                     {
                         scene[height - 1, i] = scene[height - 1, i + 1];
                     }
                     scene[height - 1, width - 1] = '.';
                     break;
-                case 1: // right
+                case 1: // Right side
                     for (int i = width - 1; i > 0; i--)
                     {
                         scene[height - 1, i] = scene[height - 1, i - 1];
@@ -201,7 +250,8 @@ namespace Sl2aProject
             score++;
         }
 
-        void PressEnterToContinue()
+        // This method only accepts an enter press as valid. - Brian
+        public void PressEnterToContinue()
         {
         GetInput:
             ConsoleKey key = Console.ReadKey(true).Key;
