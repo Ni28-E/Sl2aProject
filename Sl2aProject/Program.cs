@@ -10,10 +10,10 @@ namespace Sl2aProject
             while (true)
             {
                 Console.WriteLine("Welcome the great C# game emporium!!!" +
-                    "\n\nIf you want to play Snake type snake." +
-                    "\nIf you want to play tic-tac-toe type tic." +
-                    "\nIf you want to play druver type driver." +
-                    "\n\nIf you are done playing type quit.");
+                    "\n\nIf you want to play Snake write snake." +
+                    "\nIf you want to play tic-tac-toe write tic." +
+                    "\nIf you want to play driver write driver." +
+                    "\n\nIf you are done playing write quit.");
                 string Game = Console.ReadLine().ToLower();
 
                 switch (Game)
