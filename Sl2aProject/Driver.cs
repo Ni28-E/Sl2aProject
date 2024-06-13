@@ -50,8 +50,8 @@ namespace Sl2aProject
                     }
                 }
 
-                if(keepPlaying)
-                {
+                if (keepPlaying)
+                { 
                     GameOverScreen();
                 }
 
@@ -63,6 +63,7 @@ namespace Sl2aProject
                     Console.WriteLine("Increase the size of the console window.");
                 }
                 Console.WriteLine("Game driver was closed");
+
             }
 
             WindowWidth = Console.WindowWidth;
@@ -86,13 +87,10 @@ namespace Sl2aProject
         internal void LaunchScreen()
         {
             Console.Clear();
-            Console.WriteLine("This is a driving game.");
-            Console.WriteLine();
-            Console.WriteLine("Stay on the road!");
-            Console.WriteLine();
-            Console.WriteLine("Use A, W, and D to control your velocity.");
-            Console.WriteLine();
-            Console.Write("Press [enter] to start...");
+            Console.WriteLine("This is a driving game.\n\n" +
+                "Stay on the road!\n\n" +
+                "Use W, A, S and D to control your velocity.\n\n" +
+                "Press [enter] to start...");
             PressEnterToContinue();
         }
 
@@ -173,7 +171,6 @@ namespace Sl2aProject
                         break;
                     case ConsoleKey.Escape:
                         gameActive = false;
-                        keepPlaying = false;
                         break;
                     case ConsoleKey.Enter:
                         Console.ReadLine();
@@ -187,9 +184,9 @@ namespace Sl2aProject
         void GameOverScreen()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine($"Game Over");
+            Console.WriteLine("Game Over");
             Console.WriteLine($"Score: {score}");
-            Console.WriteLine($"Play Again (Y/N)?");
+            Console.WriteLine("Play Again (Y/N)?");
         GetInput:
             ConsoleKey key = Console.ReadKey(true).Key;
             switch (key)
@@ -198,7 +195,6 @@ namespace Sl2aProject
                     keepPlaying = true;
                     break;
                 case ConsoleKey.N or ConsoleKey.Escape:
-                    gameActive = false;
                     keepPlaying = false;
                     break;
                 default:
