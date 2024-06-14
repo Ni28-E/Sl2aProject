@@ -1,5 +1,8 @@
-﻿namespace Sl2aProject
+﻿using static System.Formats.Asn1.AsnWriter;
+
+namespace Sl2aProject
 {
+    //To do: Write wall & snake collission, remove tail
     internal class Snake
     {
         int[] X = new int[50];
@@ -10,6 +13,7 @@
         int appleY;
         int parts = 3;
         char key = 'w';
+        bool keepPlaying = true;
         ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
         Random rand = new Random();
         public Snake()
@@ -27,13 +31,13 @@
 
 
 
-            while (true)
+            while (keepPlaying)
             {
                 MakeBoard(BoardHeight, BoardWidth);
                 Input();
                 Logic();
             }
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
 
@@ -73,10 +77,15 @@
             }
         }
 
-        public void WriteLocation(int x, int y)
+        static public void WriteLocationSnake(int x, int y)
         {
             Console.SetCursorPosition(x, y);
             Console.Write("#");
+        }
+        static public void WriteLocationApple(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write("A");
         }
 
         public void Logic()
@@ -84,14 +93,11 @@
 
             
 
-            if (X[0] == appleX)
+            if (X[0] == appleX && Y[0] == appleY)//this code checks the collision with the apple
             {
-                if (Y[0] == appleY)
-                {
                     parts++;
                     appleX = rand.Next(2, (BoardWidth - 2));
                     appleY = rand.Next(2, (BoardHeight - 2));
-                }
             }
             for (int i = parts; i > 1; i--)
             {
@@ -116,15 +122,45 @@
             }
             for (int i = 0; i <= (parts - 1); i++)
             {
-                WriteLocation(X[i], Y[i]);//Bugged look for fix
-                WriteLocation(appleX, appleY);
+                WriteLocationSnake(X[i], Y[i]);
+                WriteLocationApple(appleX, appleY);
             }
             Thread.Sleep(100);
         }
 
-        public void GameOver()
+        void GameOverScreen()
         {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("Game Over");
+            Console.WriteLine("Play Again (Y/N)?");
+        GetInput:
+            ConsoleKey key = Console.ReadKey(true).Key;
+            switch (key)
+            {
+                case ConsoleKey.Y:
+                    keepPlaying = true;
+                    break;
+                case ConsoleKey.N or ConsoleKey.Escape:
+                    keepPlaying = false;
+                    break;
+                default:
+                    goto GetInput;
+            }
+        }
 
+        public void PressEnterToContinue()
+        {
+        GetInput:
+            ConsoleKey key = Console.ReadKey(true).Key;
+            switch (key)
+            {
+                case ConsoleKey.Enter:
+                    break;
+                case ConsoleKey.Escape:
+                    keepPlaying = false;
+                    break;
+                default: goto GetInput;
+            }
         }
     }
 }
