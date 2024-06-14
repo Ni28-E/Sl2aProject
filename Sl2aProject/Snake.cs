@@ -33,7 +33,7 @@
                 Input();
                 Logic();
             }
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
 
