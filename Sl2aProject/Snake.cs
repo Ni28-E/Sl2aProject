@@ -131,7 +131,7 @@ namespace Sl2aProject
                     
                 }
             }
-            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1) || X[0] == 2 || Y[0] == 2) {//this statement is in charge of checking the wall collision
+            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1) || X[0] == 2 || Y[0] == 1) {//this statement is in charge of checking the wall collision
                 GameOver();
                 
             }
