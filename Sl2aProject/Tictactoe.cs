@@ -81,7 +81,7 @@ namespace Sl2aProject
                 message = " " + patternsChar + " ";
             }
 
-            Console.WriteLine(message);
+            
 
             bool status = int.TryParse(stringPatternsChar, out int number);
 
