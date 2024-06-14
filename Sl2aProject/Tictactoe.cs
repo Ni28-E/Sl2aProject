@@ -40,18 +40,28 @@ namespace Sl2aProject
         {
             Console.Clear();
             Console.WriteLine("\n");
+
             DisplayMessage(this.patterns[0, 0]);
+            Console.Write("|");
             DisplayMessage(this.patterns[0, 1]);
+            Console.Write("|");
             DisplayMessage(this.patterns[0, 2]);
 
+            Console.Write("\n-----|-----|-----");
+
             DisplayMessage(this.patterns[1, 0]);
+            Console.Write("|");
             DisplayMessage(this.patterns[1, 1]);
+            Console.Write("|");
             DisplayMessage(this.patterns[1, 2]);
 
+            Console.Write("\n-----|-----|-----");
+
             DisplayMessage(this.patterns[2, 0]);
+            Console.Write("|");
             DisplayMessage(this.patterns[2, 1]);
+            Console.Write("|");
             DisplayMessage(this.patterns[2, 2]);
-            DisplayMessage('x');
         }
 
         void main()
@@ -86,6 +96,9 @@ namespace Sl2aProject
                     }
                 }
             }
+
+            Console.Write(message);
+            Console.ResetColor();
         }
 
         void PlayerTextColor(string color)
