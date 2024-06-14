@@ -13,6 +13,7 @@ namespace Sl2aProject
         int appleY;
         int parts = 3;
         char key = 'w';
+        bool gameActive = true;
         bool keepPlaying = true;
         ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
         Random rand = new Random();
@@ -31,7 +32,7 @@ namespace Sl2aProject
 
 
 
-            while (keepPlaying)
+            while (gameActive)
             {
                 MakeBoard(BoardHeight, BoardWidth);
                 Input();
@@ -124,6 +125,12 @@ namespace Sl2aProject
             {
                 WriteLocationSnake(X[i], Y[i]);
                 WriteLocationApple(appleX, appleY);
+            }
+            for (int i = 1; i<parts;i++ ){//snake collisoon
+                if ((X[0] == X[i])&& (Y[0] == Y[i]))
+                {
+                    gameActive = false;
+                }
             }
             Thread.Sleep(100);
         }
