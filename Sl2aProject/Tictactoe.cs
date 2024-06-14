@@ -23,15 +23,15 @@ namespace Sl2aProject
         {
             Initialize();
             Display();
-            while(true)
+            while (true)
             {
                 main();
             }
         }
-         public void Initialize()
+        public void Initialize()
         {
             this.patterns = Patterns();
-            this.activeplayer = char.Parse(this.players[0,1]);
+            this.activeplayer = char.Parse(this.players[0, 1]);
             this.playerInput = 0;
             this.turns = 0;
         }
@@ -65,19 +65,19 @@ namespace Sl2aProject
 
 
             DisplayMessage(' ', "\n\nAttempt: " + this.turns + ",");
-            DisplayMessage(' ', "remaining" + this.turns + "\nl");
+            DisplayMessage(' ', "remaining" + this.turns + "\n");
 
             for (int i = 0; i < this.players.GetLength(0); i++)
             {
-                string message = this.players[i, 0] + "(" + this.players[i, 1] + "): "  + this.players[i, 3] + ",";
-                
-                if(i != (this.players.GetLength(1) - 1))
+                string message = this.players[i, 0] + "(" + this.players[i, 1] + "): " + this.players[i, 3] + ",";
+
+                if (i != (this.players.GetLength(1) - 1))
                 {
                     message += ", ";
                 }
-                
-                
-                DisplayMessage(char.Parse(this.players[i, 0]), message);
+
+
+                DisplayMessage(char.Parse(this.players[i, 1]), message);
             }
 
             DisplayMessage(' ', "\n--------------------");
@@ -106,16 +106,18 @@ namespace Sl2aProject
             {
                 this.playerInput = Convert.ToInt32(Console.ReadLine());
 
-                if ( !(this.playerInput > 0 && this.playerInput < 10 ) )
+                if (!(this.playerInput > 0 && this.playerInput < 10))
                 {
                     ErrorMessage("The input field must be between 1 and 9.");
                     GetPlayerInput();
-                } else if (! CarPlayerInputCharacter())
+                }
+                else if (!CarPlayerInputCharacter())
                 {
                     ErrorMessage("The Input field has already been taken");
                     GetPlayerInput();
                 }
-            } catch
+            }
+            catch
             {
                 ErrorMessage("The input field must be a number.");
                 GetPlayerInput();
@@ -123,13 +125,13 @@ namespace Sl2aProject
         }
 
 
-        void PlayerMessage(string message, bool newline =true)
+        void PlayerMessage(string message, bool newline = true)
         {
             int activePlayerIndex = 0;
 
-            for (int i = 0;i < this.players.GetLength(0);i++)
-            { 
-                if(this.activeplayer == char.Parse(this.players[i, 1]))
+            for (int i = 0; i < this.players.GetLength(0); i++)
+            {
+                if (this.activeplayer == char.Parse(this.players[i, 1]))
                 {
                     activePlayerIndex = i;
                     break;
@@ -138,21 +140,22 @@ namespace Sl2aProject
 
             PlayerTextColor(this.players[activePlayerIndex, 2]);
 
-            if(newline)
+            if (newline)
             {
                 Console.WriteLine(message);
-            } else
+            }
+            else
             {
                 Console.Write(message);
             }
 
             Console.ResetColor();
-        }    
+        }
 
 
         void ReplaceByPlayerCharacter()
         {
-            switch(this.playerInput)
+            switch (this.playerInput)
             {
                 case 1: this.patterns[0, 0] = this.activeplayer; PlayersTurnupdate(); break;
                 case 2: this.patterns[0, 1] = this.activeplayer; PlayersTurnupdate(); break;
@@ -163,27 +166,41 @@ namespace Sl2aProject
                 case 7: this.patterns[2, 0] = this.activeplayer; PlayersTurnupdate(); break;
                 case 8: this.patterns[2, 1] = this.activeplayer; PlayersTurnupdate(); break;
                 case 9: this.patterns[2, 2] = this.activeplayer; PlayersTurnupdate(); break;
-               
+
             }
         }
 
         void WinningCondition()
         {
-            int[,,] windPatterns = winningPatterns();
-            int PlayersRow = this.players.GetLength(0);
+            int[,,] winPatterns = winningPatterns();
+            int playersRows = this.players.GetLength(0),
+            winPatternsRows = winPatterns.GetLength(0);
+
+
+            for (int i = 0; i < playersRows; i++)
+            {
+                for (int j = 0; j < winPatternsRows; j++)
+                {
+                    char playerchar = char.Parse(this.players[i, 1]);
+
+                    char char1 = this.patterns[winPatterns[j, 0, 0], winPatterns[j, 0, 1]];
+                    char char2 = this.patterns[winPatterns[j, 1, 0], winPatterns[j, 1, 1]];
+                    char char3 = this.patterns[winPatterns[j, 2, 0], winPatterns[j, 2, 1]];
+                }
+            }
         }
 
         void SwitchActivePlayer()
         {
             for (int i = 0; i < this.players.GetLength(0); i++)
             {
-                if(this.activeplayer == char.Parse(this.players[i, 1]))
+                if (this.activeplayer == char.Parse(this.players[i, 1]))
                 {
                     int nextPlayerIndex = i + 1;
 
-                    if(nextPlayerIndex == this.players.GetLength(0))
+                    if (nextPlayerIndex == this.players.GetLength(0))
                     {
-                           nextPlayerIndex = 0;
+                        nextPlayerIndex = 0;
                     }
 
                     this.activeplayer = char.Parse(this.players[nextPlayerIndex, 1]);
@@ -197,12 +214,12 @@ namespace Sl2aProject
         {
             for (int i = 0; i < this.players.GetLength(0); i++)
             {
-                if (this.players[i,1].Equals(char.ToString(this.activeplayer)))
+                if (this.players[i, 1].Equals(char.ToString(this.activeplayer)))
                 {
-                    if (int.TryParse(this.players[i,3], out int playersTurn))
+                    if (int.TryParse(this.players[i, 3], out int playersTurn))
                     {
                         playersTurn++;
-                        this.players[i,3] = playersTurn.ToString(); 
+                        this.players[i, 3] = playersTurn.ToString();
                     }
                 }
             }
@@ -237,24 +254,24 @@ namespace Sl2aProject
         public void DisplayMessage(char patternsChar, string message = "")
         {
             string stringPatternsChar = char.ToString(patternsChar);
-            
-            if(message.Equals(""))
+
+            if (message.Equals(""))
             {
                 message = " " + patternsChar + " ";
             }
 
-            
+
 
             bool status = int.TryParse(stringPatternsChar, out int number);
 
-            if(!status)
+            if (!status)
             {
-                
-                for(int i = 0; i < this.players.GetLength(0); i++) 
+
+                for (int i = 0; i < this.players.GetLength(0); i++)
                 {
                     if (stringPatternsChar.Equals(this.players[i, 1]))
                     {
-                        
+
                         PlayerTextColor(this.players[i, 2]);
                         break;
                     }
@@ -266,16 +283,22 @@ namespace Sl2aProject
         }
 
 
-        void ErrorMessage(string message, bool newline = true) 
-        { 
+        void succesMessage(string message, bool newline = true)
+        {
+            if (newline) { };
+        }
+
+        void ErrorMessage(string message, bool newline = true)
+        {
             Console.ForegroundColor = ConsoleColor.Red;
 
-            if(newline)
-            {        
+            if (newline)
+            {
                 Console.WriteLine(message);
-            } else 
-            {           
-                Console.WriteLine(message); 
+            }
+            else
+            {
+                Console.WriteLine(message);
             }
 
             Console.ResetColor();
@@ -284,7 +307,7 @@ namespace Sl2aProject
 
         void PlayerTextColor(string color)
         {
-            switch(color.ToLower())
+            switch (color.ToLower())
             {
                 case "cyan":
                     Console.ForegroundColor = ConsoleColor.Cyan;
@@ -293,7 +316,7 @@ namespace Sl2aProject
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
                 case "default":
-                    Console.ForegroundColor = ConsoleColor.Gray; 
+                    Console.ForegroundColor = ConsoleColor.Gray;
                     break;
             }
         }
@@ -323,6 +346,7 @@ namespace Sl2aProject
                 { { 0, 0 }, { 1, 1 }, { 2, 2 } },
                 { { 0, 0 }, { 1, 1 }, { 2, 2 } },
             };
-    }
+        }
 
+    }
 }
