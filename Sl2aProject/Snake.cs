@@ -3,7 +3,7 @@
 namespace Sl2aProject
 {
     
-    internal class Snake
+    internal class Snake //To do: Write wall collission for top & left? bug
     {
         int[] X = new int[50];
         int[] Y = new int[50];
@@ -35,6 +35,7 @@ namespace Sl2aProject
                 Logic();
             }
             Console.Clear();
+
 
         }
 
@@ -130,7 +131,7 @@ namespace Sl2aProject
                     
                 }
             }
-            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1)) {//this function is in charge of checking the wall collision
+            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1) || X[0] == 2 || Y[0] == 2) {//this function is in charge of checking the wall collision
                 GameOver();
                 
             }
