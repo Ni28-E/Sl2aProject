@@ -25,7 +25,8 @@ namespace Sl2aProject
                         break;
                     case "tic":
                     case "t":
-                       
+                        Tictactoe tictactoe = new();
+                        tictactoe.Initialize();
                         break;
                     case "driver":
                     case "d":
