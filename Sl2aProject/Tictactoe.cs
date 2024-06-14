@@ -51,6 +51,7 @@ namespace Sl2aProject
             DisplayMessage(this.patterns[2, 0]);
             DisplayMessage(this.patterns[2, 1]);
             DisplayMessage(this.patterns[2, 2]);
+            DisplayMessage('x');
         }
 
         void main()
@@ -74,13 +75,38 @@ namespace Sl2aProject
 
             if(!status)
             {
-                Console.WriteLine(this.players.GetLength(0));
+                
                 for(int i = 0; i < this.players.GetLength(0); i++) 
                 {
-
+                    if (stringpatternsChar.Equals(this.players[i,1]))
+                    {
+                        
+                        PlayerTextColor(this.players[i,2]);
+                        break;
+                    }
                 }
             }
         }
+
+        void PlayerTextColor(string color)
+        {
+            switch(color.ToLower())
+            {
+                case "cyan":
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    break;
+                case "yellow":
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case "default":
+                    Console.ForegroundColor = ConsoleColor.Gray; 
+                    break;
+            }
+        }
+
+
+
+
 
         char[,] Patterns()
         {
