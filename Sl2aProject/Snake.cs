@@ -3,12 +3,12 @@
 namespace Sl2aProject
 {
     
-    internal class Snake //To do: Write wall collission for top & left? bug
+    internal class Snake 
     {
         int[] X = new int[50];
         int[] Y = new int[50];
         int BoardHeight = 20; //this variable determines the height of the generated board
-        int BoardWidth = 30; //this variable determines the width of the generated board
+        int BoardWidth = 40; //this variable determines the width of the generated board
         int appleX;
         int appleY;
         int parts = 3;
@@ -76,18 +76,18 @@ namespace Sl2aProject
             }
         }
 
-        public void WriteLocationSnake(int x, int y)
+        public void WriteLocationSnake(int x, int y)//this is where we set the coordinates of the snake
         { 
             Console.SetCursorPosition(x, y);
             Console.Write("#");
         }
-        static public void WriteLocationApple(int x, int y)
+        static public void WriteLocationApple(int x, int y)//this is where we set the coordinates of the apple
         {
             Console.SetCursorPosition(x, y);
             Console.Write("A");
         }
 
-        public void Logic()
+        public void Logic()//in this function we process the game logic
         {
 
             
@@ -131,7 +131,7 @@ namespace Sl2aProject
                     
                 }
             }
-            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1) || X[0] == 2 || Y[0] == 2) {//this function is in charge of checking the wall collision
+            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1) || X[0] == 2 || Y[0] == 2) {//this statement is in charge of checking the wall collision
                 GameOver();
                 
             }
