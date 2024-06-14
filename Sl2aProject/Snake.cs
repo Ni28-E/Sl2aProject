@@ -2,7 +2,7 @@
 
 namespace Sl2aProject
 {
-    //To do: Write wall collission & make playable with arrows
+    
     internal class Snake
     {
         int[] X = new int[50];
@@ -12,14 +12,13 @@ namespace Sl2aProject
         int appleX;
         int appleY;
         int parts = 3;
-        char key = 'w';
-        bool gameActive = true;
+        char key = 's';
         bool keepPlaying = true;
         ConsoleKeyInfo keyInfo = new ConsoleKeyInfo();
         Random rand = new Random();
         public Snake()
         {
-            X[0] = 5;
+            X[0] = 5;//is the head
             Y[0] = 5;
             Console.CursorVisible = false;//we hide the cursor
             appleX = rand.Next(2, (BoardWidth - 2));
@@ -28,19 +27,17 @@ namespace Sl2aProject
 
         public void Play()
         {
-            Console.Clear();//here we clear all the previous inputs from the console
-
-
-
-            while (gameActive)
+            LaunchScreen();
+            while (keepPlaying)
             {
                 MakeBoard(BoardHeight, BoardWidth);
                 Input();
                 Logic();
             }
-            Console.ReadKey();
+            Console.Clear();
 
         }
+
 
         public static void MakeBoard(int BoardHeight, int BoardWidth)
         {
@@ -78,8 +75,8 @@ namespace Sl2aProject
             }
         }
 
-        static public void WriteLocationSnake(int x, int y)
-        {
+        public void WriteLocationSnake(int x, int y)
+        { 
             Console.SetCursorPosition(x, y);
             Console.Write("#");
         }
@@ -126,33 +123,28 @@ namespace Sl2aProject
                 WriteLocationSnake(X[i], Y[i]);
                 WriteLocationApple(appleX, appleY);
             }
-            for (int i = 1; i<parts;i++ ){//snake tail collision
+            for (int i = 1; i<parts;i++ ){//this is the code for the snake tail collision
                 if ((X[0] == X[i])&& (Y[0] == Y[i]))
                 {
-                    gameActive = false;
+                    GameOver();
+                    
                 }
             }
+            if (X[0] == BoardWidth || Y[0] == (BoardHeight+1)) {//this function is in charge of checking the wall collision
+                GameOver();
+                
+            }
+
+
             Thread.Sleep(100);
         }
 
-        void GameOverScreen()
+        public void GameOver()
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Game Over");
-            Console.WriteLine("Play Again (Y/N)?");
-        GetInput:
-            ConsoleKey key = Console.ReadKey(true).Key;
-            switch (key)
-            {
-                case ConsoleKey.Y:
-                    keepPlaying = true;
-                    break;
-                case ConsoleKey.N or ConsoleKey.Escape:
-                    keepPlaying = false;
-                    break;
-                default:
-                    goto GetInput;
-            }
+            keepPlaying = false;
+
         }
 
         public void PressEnterToContinue()
@@ -169,5 +161,16 @@ namespace Sl2aProject
                 default: goto GetInput;
             }
         }
+
+        internal void LaunchScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("This is a snake game.\n\n" +
+                "Collect the Apples and dont hit your own tail!\n\n" +
+                "Use W, A, S and D to control your movement.\n\n" +
+                "Press [enter] to start...");
+            PressEnterToContinue();
+        }
+
     }
 }
