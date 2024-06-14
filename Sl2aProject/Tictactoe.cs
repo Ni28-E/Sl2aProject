@@ -46,7 +46,7 @@ namespace Sl2aProject
             Console.Write("|");
             DisplayMessage(this.patterns[0, 2]);
 
-            Console.Write("\n-----|-----|-----");
+            Console.Write("\n-----|-----|-----\n");
 
             DisplayMessage(this.patterns[1, 0]);
             Console.Write("|");
@@ -54,7 +54,7 @@ namespace Sl2aProject
             Console.Write("|");
             DisplayMessage(this.patterns[1, 2]);
 
-            Console.Write("\n-----|-----|-----");
+            Console.Write("\n-----|-----|-----\n");
 
             DisplayMessage(this.patterns[2, 0]);
             Console.Write("|");
