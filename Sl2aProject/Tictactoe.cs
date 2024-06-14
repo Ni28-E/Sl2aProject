@@ -22,7 +22,7 @@ namespace Sl2aProject
         public Tictactoe()
         {
             Initialize();
-            display();
+            Display();
             while(true)
             {
                 main();
@@ -36,11 +36,10 @@ namespace Sl2aProject
             this.turns = 0;
         }
 
-        void display()
+        void Display()
         {
             Console.Clear();
             Console.WriteLine("\n");
-
             DisplayMessage(this.patterns[0, 0]);
             Console.Write("|");
             DisplayMessage(this.patterns[0, 1]);
@@ -62,6 +61,9 @@ namespace Sl2aProject
             DisplayMessage(this.patterns[2, 1]);
             Console.Write("|");
             DisplayMessage(this.patterns[2, 2]);
+
+            DisplayMessage(' ', "\n\nAttempt: " + this.turns + ",");
+            DisplayMessage(' ', "remaining" + this.turns + "\nl");
         }
 
         void main()
@@ -70,28 +72,28 @@ namespace Sl2aProject
             Console.ReadKey();
         }
 
-        public void DisplayMessage(char patternschar, string message = "")
+        public void DisplayMessage(char patternsChar, string message = "")
         {
-            string stringpatternsChar = char.ToString(patternschar);
+            string stringPatternsChar = char.ToString(patternsChar);
             
             if(message.Equals(""))
             {
-                message = " " + patternschar + " ";
+                message = " " + patternsChar + " ";
             }
 
             Console.WriteLine(message);
 
-            bool status = int.TryParse(stringpatternsChar, out int number);
+            bool status = int.TryParse(stringPatternsChar, out int number);
 
             if(!status)
             {
                 
                 for(int i = 0; i < this.players.GetLength(0); i++) 
                 {
-                    if (stringpatternsChar.Equals(this.players[i,1]))
+                    if (stringPatternsChar.Equals(this.players[i, 1]))
                     {
                         
-                        PlayerTextColor(this.players[i,2]);
+                        PlayerTextColor(this.players[i, 2]);
                         break;
                     }
                 }
@@ -117,17 +119,13 @@ namespace Sl2aProject
             }
         }
 
-
-
-
-
         char[,] Patterns()
         {
             return new char[,]
             {
-              {'1','2','3' },
-              {'4','5','6' },
-              {'7','8','9' },
+              {'1', '2', '3' },
+              {'4', '5', '6' },
+              {'7', '8', '9' }
             };
         }
     }
