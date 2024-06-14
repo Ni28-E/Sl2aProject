@@ -126,7 +126,7 @@ namespace Sl2aProject
                 WriteLocationSnake(X[i], Y[i]);
                 WriteLocationApple(appleX, appleY);
             }
-            for (int i = 1; i<parts;i++ ){//snake collisoon
+            for (int i = 1; i<parts;i++ ){//snake tail collision
                 if ((X[0] == X[i])&& (Y[0] == Y[i]))
                 {
                     gameActive = false;
