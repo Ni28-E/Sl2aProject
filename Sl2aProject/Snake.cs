@@ -2,7 +2,7 @@
 
 namespace Sl2aProject
 {
-    //To do: Write wall & snake collission, remove tail
+    //To do: Write wall collission & make playable with arrows
     internal class Snake
     {
         int[] X = new int[50];
@@ -38,14 +38,14 @@ namespace Sl2aProject
                 Input();
                 Logic();
             }
-            //Console.ReadKey();
+            Console.ReadKey();
 
         }
 
         public static void MakeBoard(int BoardHeight, int BoardWidth)
         {
 
-
+            Console.Clear();
             for (int i = 1; i <= (BoardWidth + 2); i++)//in these for loops we generate the borders of the board
             {
                 Console.SetCursorPosition(i, 1);
@@ -97,7 +97,7 @@ namespace Sl2aProject
             if (X[0] == appleX && Y[0] == appleY)//this code checks the collision with the apple
             {
                     parts++;
-                    appleX = rand.Next(2, (BoardWidth - 2));
+                    appleX = rand.Next(2, (BoardWidth - 2));//we *know where the walls are by checking the board width and height and subtracting 2
                     appleY = rand.Next(2, (BoardHeight - 2));
             }
             for (int i = parts; i > 1; i--)
@@ -114,7 +114,7 @@ namespace Sl2aProject
                 case 'a':
                     X[0]--;
                     break;
-                case 's':
+                case 's' :
                     Y[0]++;
                     break;
                 case 'd':
